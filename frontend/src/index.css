@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root{font-family:'DM Sans',sans-serif;color:#29283a;background:#faf9f7;font-synthesis:none}
+*{box-sizing:border-box}
+body{margin:0;min-width:320px}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.card{background:#fff;border:1px solid #f0eef0;border-radius:22px;box-shadow:0 7px 28px rgba(48,39,73,.035)}
+.soft-scroll::-webkit-scrollbar{height:7px;width:7px}.soft-scroll::-webkit-scrollbar-thumb{background:#e5e1e8;border-radius:99px}
+
+@media(min-width:640px){.activity-grid{grid-template-columns:repeat(15,minmax(0,1fr))!important}}@media(min-width:1024px){.activity-grid{grid-template-columns:repeat(30,minmax(0,1fr))!important}}
