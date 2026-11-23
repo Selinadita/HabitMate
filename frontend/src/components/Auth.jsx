@@ -1,9 +1,138 @@
-import {useState} from 'react';
-import {Sparkles, Mail, Lock, UserRound} from 'lucide-react';
-import api from '../lib/api';
+import { useState } from "react";
+import { Sparkles, Mail, Lock, UserRound } from "lucide-react";
+import api from "../lib/api";
 
-export default function Auth({onAuth}){
- const [mode,setMode]=useState('login'),[name,setName]=useState(''),[email,setEmail]=useState(''),[password,setPassword]=useState(''),[busy,setBusy]=useState(false),[error,setError]=useState('');
- async function submit(e){e.preventDefault();setBusy(true);setError('');try{const {data}=await api.post(`/auth/${mode}`,mode==='register'?{name,email,password}:{email,password});localStorage.setItem('habitmate_token',data.access_token);onAuth(data.user);}catch(err){setError(err.response?.data?.detail||'Could not connect to HabitMate API. Check that the backend is running.');}finally{setBusy(false);}}
- return <div className="min-h-screen flex items-center justify-center p-5 bg-[#faf9f7]"><div className="w-full max-w-[430px] card p-8 sm:p-10"><div className="flex items-center gap-3 mb-9"><div className="w-11 h-11 rounded-2xl bg-[#eee9ff] text-[#8067d8] grid place-items-center"><Sparkles/></div><div><div className="font-extrabold text-xl tracking-tight">HabitMate</div><div className="text-xs text-[#9290a1]">Build better habits, one day at a time</div></div></div><h1 className="font-extrabold text-2xl mb-2">{mode==='login'?'Welcome back':'Start your 30-day journey'}</h1><p className="text-sm text-[#858397] mb-7">{mode==='login'?'Sign in to pick up where you left off.':'Create an account and make small steps count.'}</p><form onSubmit={submit} className="space-y-4">{mode==='register'&&<label className="block"><span className="text-xs font-semibold text-[#656477]">Your name</span><div className="mt-1.5 flex items-center gap-2 bg-[#faf9fb] border border-[#eeecf1] rounded-xl px-3"><UserRound size={17} className="text-[#aaa7b7]"/><input required value={name} onChange={e=>setName(e.target.value)} className="w-full bg-transparent py-3 outline-none text-sm" placeholder="Selina"/></div></label>}<label className="block"><span className="text-xs font-semibold text-[#656477]">Email address</span><div className="mt-1.5 flex items-center gap-2 bg-[#faf9fb] border border-[#eeecf1] rounded-xl px-3"><Mail size={17} className="text-[#aaa7b7]"/><input required type="email" value={email} onChange={e=>setEmail(e.target.value)} className="w-full bg-transparent py-3 outline-none text-sm" placeholder="you@example.com"/></div></label><label className="block"><span className="text-xs font-semibold text-[#656477]">Password</span><div className="mt-1.5 flex items-center gap-2 bg-[#faf9fb] border border-[#eeecf1] rounded-xl px-3"><Lock size={17} className="text-[#aaa7b7]"/><input required minLength={8} type="password" value={password} onChange={e=>setPassword(e.target.value)} className="w-full bg-transparent py-3 outline-none text-sm" placeholder="At least 8 characters"/></div></label>{error&&<p className="text-sm text-rose-600 bg-rose-50 p-3 rounded-xl">{error}</p>}<button disabled={busy} className="w-full rounded-xl bg-[#8067d8] hover:bg-[#7056cc] text-white py-3 font-bold text-sm disabled:opacity-60">{busy?'Please wait…':mode==='login'?'Sign in':'Create account'}</button></form><p className="text-center text-sm text-[#858397] mt-6">{mode==='login'?"New to HabitMate?":'Already have an account?'} <button onClick={()=>{setMode(mode==='login'?'register':'login');setError('');}} className="text-[#8067d8] font-bold">{mode==='login'?'Create account':'Sign in'}</button></p></div></div>
+export default function Auth({ onAuth }) {
+  const [mode, setMode] = useState("login"),
+    [name, setName] = useState(""),
+    [email, setEmail] = useState(""),
+    [password, setPassword] = useState(""),
+    [busy, setBusy] = useState(false),
+    [error, setError] = useState("");
+  async function submit(e) {
+    e.preventDefault();
+    setBusy(true);
+    setError("");
+    try {
+      const { data } = await api.post(
+        `/auth/${mode}`,
+        mode === "register" ? { name, email, password } : { email, password },
+      );
+      localStorage.setItem("habitmate_token", data.access_token);
+      onAuth(data.user);
+    } catch (err) {
+      setError(
+        err.response?.data?.detail ||
+          "Could not connect to HabitMate API. Check that the backend is running.",
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <div className="min-h-screen flex items-center justify-center p-5 bg-[#faf9f7]">
+      <div className="w-full max-w-[430px] card p-8 sm:p-10">
+        <div className="flex items-center gap-3 mb-9">
+          <div className="w-11 h-11 rounded-2xl bg-[#eee9ff] text-[#8067d8] grid place-items-center">
+            <Sparkles />
+          </div>
+          <div>
+            <div className="font-extrabold text-xl tracking-tight">
+              HabitMate
+            </div>
+            <div className="text-xs text-[#9290a1]">
+              Build better habits, one day at a time
+            </div>
+          </div>
+        </div>
+        <h1 className="font-extrabold text-2xl mb-2">
+          {mode === "login" ? "Welcome back" : "Start your 30-day journey"}
+        </h1>
+        <p className="text-sm text-[#858397] mb-7">
+          {mode === "login"
+            ? "Sign in to pick up where you left off."
+            : "Create an account and make small steps count."}
+        </p>
+        <form onSubmit={submit} className="space-y-4">
+          {mode === "register" && (
+            <label className="block">
+              <span className="text-xs font-semibold text-[#656477]">
+                Your name
+              </span>
+              <div className="mt-1.5 flex items-center gap-2 bg-[#faf9fb] border border-[#eeecf1] rounded-xl px-3">
+                <UserRound size={17} className="text-[#aaa7b7]" />
+                <input
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full bg-transparent py-3 outline-none text-sm"
+                  placeholder="Selina"
+                />
+              </div>
+            </label>
+          )}
+          <label className="block">
+            <span className="text-xs font-semibold text-[#656477]">
+              Email address
+            </span>
+            <div className="mt-1.5 flex items-center gap-2 bg-[#faf9fb] border border-[#eeecf1] rounded-xl px-3">
+              <Mail size={17} className="text-[#aaa7b7]" />
+              <input
+                required
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-transparent py-3 outline-none text-sm"
+                placeholder="you@example.com"
+              />
+            </div>
+          </label>
+          <label className="block">
+            <span className="text-xs font-semibold text-[#656477]">
+              Password
+            </span>
+            <div className="mt-1.5 flex items-center gap-2 bg-[#faf9fb] border border-[#eeecf1] rounded-xl px-3">
+              <Lock size={17} className="text-[#aaa7b7]" />
+              <input
+                required
+                minLength={8}
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full bg-transparent py-3 outline-none text-sm"
+                placeholder="At least 8 characters"
+              />
+            </div>
+          </label>
+          {error && (
+            <p className="text-sm text-rose-600 bg-rose-50 p-3 rounded-xl">
+              {error}
+            </p>
+          )}
+          <button
+            disabled={busy}
+            className="w-full rounded-xl bg-[#8067d8] hover:bg-[#7056cc] text-white py-3 font-bold text-sm disabled:opacity-60"
+          >
+            {busy
+              ? "Please wait…"
+              : mode === "login"
+              ? "Sign in"
+              : "Create account"}
+          </button>
+        </form>
+        <p className="text-center text-sm text-[#858397] mt-6">
+          {mode === "login" ? "New to HabitMate?" : "Already have an account?"}{" "}
+          <button
+            onClick={() => {
+              setMode(mode === "login" ? "register" : "login");
+              setError("");
+            }}
+            className="text-[#8067d8] font-bold"
+          >
+            {mode === "login" ? "Create account" : "Sign in"}
+          </button>
+        </p>
+      </div>
+    </div>
+  );
 }

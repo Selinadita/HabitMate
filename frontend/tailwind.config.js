@@ -1,1 +1,19 @@
-export default { content:['./index.html','./src/**/*.{js,jsx}'], theme:{extend:{fontFamily:{sans:['Inter','ui-sans-serif','system-ui']},colors:{ink:'#29283a',muted:'#858397',paper:'#faf9f7',lilac:'#eee9ff',rose:'#ffe9ee',mint:'#e3f5ec',butter:'#fff4d8',sky:'#e5f2ff'}}}, plugins:[] };
+export default {
+  content: ["./index.html", "./src/**/*.{js,jsx}"],
+  theme: {
+    extend: {
+      fontFamily: { sans: ["Inter", "ui-sans-serif", "system-ui"] },
+      colors: {
+        ink: "#29283a",
+        muted: "#858397",
+        paper: "#faf9f7",
+        lilac: "#eee9ff",
+        rose: "#ffe9ee",
+        mint: "#e3f5ec",
+        butter: "#fff4d8",
+        sky: "#e5f2ff",
+      },
+    },
+  },
+  plugins: [],
+};
